@@ -1,0 +1,36 @@
+{
+  "name": "react-nano-payment",
+  "version": "0.1.0",
+  "description": "A React modal for receiving NANO payments",
+  "main": "./lib/NanoPayment.js",
+  "scripts": {
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nano",
+    "nanocurrency",
+    "crypto",
+    "payments",
+    "react",
+    "js"
+  ],
+  "author": "Hector Chu",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0"
+  },
+  "dependencies": {
+    "big.js": "^6.0.3",
+    "qrcode.react": "^1.0.1",
+    "react-bootstrap": "^1.4.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.13",
+    "@babel/preset-react": "^7.12.13",
+    "babel-loader": "^8.2.2",
+    "webpack": "^5.21.2",
+    "webpack-cli": "^4.5.0"
+  }
+}
