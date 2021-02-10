@@ -15,7 +15,7 @@ async function postData(url, data, signal) {
 
 export default function useNanoPayment({
   apiURL = 'https://gonano.dev',
-  account, amount, show, onSuccess, onError,
+  account, amount, paymentID, show, onSuccess, onError,
 }) {
   const [account2, setAccount] = useState('');
 
@@ -23,19 +23,23 @@ export default function useNanoPayment({
     if (!show) return;
     const controller = new AbortController;
     const {signal} = controller;
-    let id;
+    let id = paymentID;
 
     (async () => {
       let data;
-      setAccount('');
-      try {
-        data = await postData(`${apiURL}/payment/new`, {account, amount}, signal);
-      } catch (err) {
-        if (err.name != 'AbortError') onError(err);
-        return;
+      if (id) {
+        setAccount(account);
+      } else {
+        setAccount('');
+        try {
+          data = await postData(`${apiURL}/payment/new`, {account, amount}, signal);
+        } catch (err) {
+          if (err.name != 'AbortError') onError(err);
+          return;
+        }
+        id = data.id;
+        setAccount(data.account);
       }
-      id = data.id;
-      setAccount(data.account);
       while (true) {
         try {
           data = await postData(`${apiURL}/payment/wait`, {id}, signal);
@@ -53,7 +57,7 @@ export default function useNanoPayment({
       controller.abort();
       if (id) postData(`${apiURL}/payment/cancel`, {id}).catch(onError);
     };
-  }, [account, amount, show]);
+  }, [account, amount, paymentID, show]);
 
   return account2;
 }
