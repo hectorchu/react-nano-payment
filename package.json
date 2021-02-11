@@ -1,7 +1,8 @@
 {
   "name": "react-nano-payment",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A React modal for receiving NANO payments",
+  "repository": "https://github.com/hectorchu/react-nano-payment",
   "main": "./lib/NanoPayment.js",
   "scripts": {
     "build": "webpack",
