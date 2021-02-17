@@ -8,7 +8,9 @@ async function postData(url, data, signal) {
     signal,
   });
   if (resp.status != 200) {
-    throw new Error(await resp.text());
+    const err = Error(await resp.text());
+    err.code = resp.status;
+    throw err;
   }
   return await resp.json();
 }
@@ -46,6 +48,7 @@ export default function useNanoPayment({
           break;
         } catch (err) {
           if (err.name == 'AbortError') return;
+          if (err.code) return onError(err);
         }
         await new Promise(res => setTimeout(res, 3e3));
       }
